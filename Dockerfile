@@ -43,6 +43,13 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 ENV GOPATH="/root/go"
 ENV PATH="${GOPATH}/bin:${PATH}"
 
+# install homebrew
+RUN useradd -m -s /bin/bash linuxbrew
+COPY --from=homebrew/brew:latest /home/linuxbrew/.linuxbrew /home/linuxbrew/.linuxbrew
+RUN chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+ENV HOMEBREW_NO_AUTO_UPDATE=1
+
 
 WORKDIR /workspace
 ADD bootstrap.sh .
