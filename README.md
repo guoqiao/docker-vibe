@@ -1,6 +1,6 @@
 # docker-vibe
 
-Vide Coding in Docker with all the tools.
+Vide Coding in Docker with all the batteries.
 
 ## Why I need this ?
 
@@ -38,4 +38,16 @@ available code agents:
 - opencode
 - amp
 - pi
+
+available code executors:
+- bash
+- python/uv/uvx
+- node/npm/pnpm/bun/bunx
+- golang
+
+available package managers:
+- apt/apt-get
+- brew
+- pip/uv
+- npm/pnpm/bun
 
