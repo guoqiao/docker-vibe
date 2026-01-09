@@ -28,6 +28,7 @@ RUN npm install -g \
 
 RUN bunx oh-my-opencode install --no-tui --claude=no --chatgpt=no --gemini=no
 
+RUN curl -fsSL https://ampcode.com/install.sh | bash
 
 # install uv
 # https://docs.astral.sh/uv/guides/integration/docker/#available-images
