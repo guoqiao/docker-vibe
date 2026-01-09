@@ -37,6 +37,12 @@ RUN curl -fsSL https://ampcode.com/install.sh | bash
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
+# install go
+COPY --from=golang:latest /usr/local/go /usr/local/go
+ENV PATH="/usr/local/go/bin:${PATH}"
+ENV GOPATH="/root/go"
+ENV PATH="${GOPATH}/bin:${PATH}"
+
 
 WORKDIR /workspace
 ADD bootstrap.sh .
