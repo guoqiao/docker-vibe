@@ -1,0 +1,5 @@
+.env
+.venv/
+tmp/
+package-lock.json
+uv-lock.json
