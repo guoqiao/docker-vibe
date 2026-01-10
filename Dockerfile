@@ -51,14 +51,5 @@ ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 WORKDIR /workspace
-ADD bootstrap.sh .
-RUN bash bootstrap.sh
-
-# Create vibe user
-RUN useradd -m -s /bin/bash vibe && \
-    chown -R vibe:vibe /workspace
-
-# Switch to vibe user
-USER vibe
 
 CMD ["/bin/bash"]
