@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
     bat fzf \
     shellcheck yamllint \
     strace net-tools \
-    vim
+    vim \
+    sudo
 
 RUN npm install -g \
     npm \
@@ -52,10 +53,10 @@ ENV HOMEBREW_NO_AUTO_UPDATE=1
 
 # Create vibe user
 RUN useradd -m -s /bin/bash vibe
+RUN usermod -aG sudo vibe
+RUN echo "vibe ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+COPY --chown=vibe:vibe .claude /home/vibe/.claude
 USER vibe
-
 WORKDIR /workspace
-
-ADD .claude /root/.claude
 
 CMD ["/bin/bash"]
