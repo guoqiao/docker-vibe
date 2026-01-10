@@ -50,6 +50,10 @@ RUN chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
+# Create vibe user
+RUN useradd -m -s /bin/bash vibe
+USER vibe
+
 WORKDIR /workspace
 
 CMD ["/bin/bash"]
