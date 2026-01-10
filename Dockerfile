@@ -51,12 +51,11 @@ RUN chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
-# Create vibe user
-RUN useradd -m -s /bin/bash vibe
-RUN usermod -aG sudo vibe
-RUN echo "vibe ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-COPY --chown=vibe:vibe .claude /home/vibe/.claude
-USER vibe
+# Configure node user with sudo access
+RUN usermod -aG sudo node
+RUN echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+COPY --chown=node:node .claude /home/node/.claude
+USER node
 WORKDIR /workspace
 
 CMD ["/bin/bash"]
