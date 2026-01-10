@@ -50,15 +50,15 @@ RUN chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
 ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
 ENV HOMEBREW_NO_AUTO_UPDATE=1
 
-WORKDIR /workspace
-ADD bootstrap.sh .
-RUN bash bootstrap.sh
-
 # Create vibe user
-RUN useradd -m -s /bin/bash vibe && \
-    chown -R vibe:vibe /workspace
+RUN useradd -m -s /bin/bash vibe
 
-# Switch to vibe user
+# Switch to vibe user and set working directory to home
 USER vibe
+WORKDIR /workspace
+
+# Copy and run bootstrap script
+#ADD --chown=vibe:vibe bootstrap.sh .
+#RUN bash bootstrap.sh
 
 CMD ["/bin/bash"]
