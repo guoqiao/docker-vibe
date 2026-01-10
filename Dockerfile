@@ -56,4 +56,6 @@ USER vibe
 
 WORKDIR /workspace
 
+ADD .claude /root/.claude
+
 CMD ["/bin/bash"]
