@@ -54,7 +54,9 @@ ENV PATH="${GOPATH}/bin:${PATH}"
 # Configure node user with sudo access
 RUN usermod -aG sudo node && echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 COPY --chown=node:node .claude /home/node/.claude
+COPY --chmod=0644 etc/profile.d/profile.sh /etc/profile.d/profile.sh
 USER node
 WORKDIR /workspace
 
-CMD ["/bin/bash"]
+# run a login shell, so /etc/profile.d/*.sh will be loaded
+CMD ["/bin/bash", "--login"]
