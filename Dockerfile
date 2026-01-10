@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     ca-certificates \
     curl wget httpie \
-    git tree \
+    git tree less \
     time \
     tmux \
     htop lsof \
