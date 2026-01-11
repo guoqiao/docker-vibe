@@ -19,7 +19,7 @@ env_file=${1:-~/.env.d/vibe.env}
 # agent config dirs are mounted into container
 # so oauth can work directly, and sessions can persist
 
-docker run -it --rm --platform linux/amd64 \
+docker run -it --rm --platform linux/amd64 --pull never \
     -e HOST_UID=$(id -u) \
     -e HOST_GID=$(id -g) \
     --env-file ${env_file} \
