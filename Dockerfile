@@ -53,7 +53,12 @@ ENV PATH="${GOPATH}/bin:${PATH}"
 
 # Configure node user with sudo access
 RUN usermod -aG sudo node && echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-COPY --chmod=0644 etc/profile.d/profile.sh /etc/profile.d/profile.sh
+
+# Add custom aliases
+RUN cat >> /etc/bash.bashrc <<'EOF'
+alias ll="ls -alh"
+alias claude-yolo="claude --dangerously-skip-permissions"
+EOF
 
 USER node
 WORKDIR /workspace
