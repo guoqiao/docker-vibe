@@ -7,6 +7,7 @@ set -xue
 # which is normally 1000 on debian/ubuntu
 owner="$(id -u):$(id -g)"
 sudo chown -R "${owner}" ~/.claude
+sudo chown -R "${owner}" ~/.gemini
 
 name=$(basename $(pwd))
 # claude code will create a folder ~/.claude/projects/-home-node-${name}
@@ -18,6 +19,7 @@ docker run -it --rm \
     -u ${owner} \
     --env-file ${ENV_FILE} \
     -v ~/.claude:/home/node/.claude \
+    -v ~/.gemini:/home/node/.gemini \
     -v $(pwd):${workdir} -w ${workdir} \
     --name ${name} \
     vibe
