@@ -38,6 +38,7 @@ vibe ~/.env.d/vibe.env
 ```
 
 `.env` example:
+(not needed if you use oauth for claude code)
 ```
 ANTHROPIC_BASE_URL=http://192.168.20.55:8317
 ANTHROPIC_AUTH_TOKEN=sk-xxxx
