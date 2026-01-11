@@ -11,6 +11,7 @@ sudo chown -R "${owner}" ~/.gemini
 
 name=$(basename $(pwd))
 # claude code will create a folder ~/.claude/projects/-home-node-${name}
+# so it's necessary to use specific folder name
 workdir=/home/node/${name}
 
 ENV_FILE=${ENV_FILE:-~/.env.d/vibe.env}
