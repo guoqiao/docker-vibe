@@ -14,11 +14,11 @@ name=$(basename $(pwd))
 # so it's necessary to use specific folder name
 workdir=/home/node/${name}
 
-ENV_FILE=${ENV_FILE:-~/.env.d/vibe.env}
+env_file=${1:-~/.env.d/vibe.env}
 
 docker run -it --rm \
     -u ${owner} \
-    --env-file ${ENV_FILE} \
+    --env-file ${env_file} \
     -v ~/.claude:/home/node/.claude \
     -v ~/.gemini:/home/node/.gemini \
     -v $(pwd):${workdir} -w ${workdir} \
