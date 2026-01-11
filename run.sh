@@ -2,10 +2,23 @@
 
 set -xue
 
-touch .env
+# run container with same user id to avoid perm issues
+# assume the user id exists in both host and container
+# which is normally 1000 on debian/ubuntu
+owner="$(id -u):$(id -g)"
+sudo chown -R "${owner}" ~/.claude
+
+name=$(basename $(pwd))
+# claude code will create a folder ~/.claude/projects/-home-node-${name}
+workdir=/home/node/${name}
+
+ENV_FILE=${ENV_FILE:-~/.env.d/vibe.env}
 
 docker run -it --rm \
-    --env-file .env \
-    -v $(pwd):/workspace \
+    -u ${owner} \
+    --env-file ${ENV_FILE} \
+    -v ~/.claude:/home/node/.claude \
+    -v $(pwd):${workdir} -w ${workdir} \
+    --name ${name} \
     vibe
 
