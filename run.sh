@@ -6,8 +6,8 @@ set -xue
 # assume the user id exists in both host and container
 # which is normally 1000 on debian/ubuntu
 owner="$(id -u):$(id -g)"
-sudo chown -R "${owner}" ~/.claude
-sudo chown -R "${owner}" ~/.gemini
+mkdir -p ~/.claude && sudo chown -R "${owner}" ~/.claude
+mkdir -p ~/.gemini && sudo chown -R "${owner}" ~/.gemini
 
 name=$(basename $(pwd))
 # claude code will create a folder ~/.claude/projects/-home-node-${name}
@@ -15,6 +15,9 @@ name=$(basename $(pwd))
 workdir=/home/node/${name}
 
 env_file=${1:-~/.env.d/vibe.env}
+
+# agent config dirs are mounted into container
+# so oauth can work directly, and sessions can persist
 
 docker run -it --rm \
     -u ${owner} \
