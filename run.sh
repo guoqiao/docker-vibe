@@ -19,7 +19,7 @@ env_file=${1:-~/.env.d/vibe.env}
 # agent config dirs are mounted into container
 # so oauth can work directly, and sessions can persist
 
-docker run -it --rm \
+docker run -it --rm --platform amd64 \
     -u ${owner} \
     --env-file ${env_file} \
     -v ~/.claude:/home/node/.claude \

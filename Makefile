@@ -11,7 +11,7 @@ show:
 	docker image ls | grep ${name}
 
 build:
-	docker build -t ${name} .
+	docker build --platform amd64 -t ${name} .
 	make show
 
 run: init
