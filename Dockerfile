@@ -15,17 +15,18 @@ RUN apt-get update && apt-get install -y \
     shellcheck yamllint \
     strace net-tools \
     vim \
-    sudo
+    sudo \
+    gosu
 
 RUN npm install -g \
     npm \
     pnpm \
     bun \
-    @ast-grep/cli \
-    @mariozechner/pi-coding-agent \
-    @anthropic-ai/claude-code \
-    @google/gemini-cli \
-    opencode-ai
+    @ast-grep/cli@latest \
+    @mariozechner/pi-coding-agent@latest \
+    @anthropic-ai/claude-code@latest \
+    @google/gemini-cli@latest \
+    opencode-ai@latest
 
 RUN bunx oh-my-opencode install --no-tui --claude=no --chatgpt=no --gemini=no
 
