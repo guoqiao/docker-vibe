@@ -15,17 +15,18 @@ RUN apt-get update && apt-get install -y \
     shellcheck yamllint \
     strace net-tools \
     vim \
-    sudo
+    sudo \
+    gosu
 
 RUN npm install -g \
     npm \
     pnpm \
     bun \
-    @ast-grep/cli \
-    @mariozechner/pi-coding-agent \
-    @anthropic-ai/claude-code \
-    @google/gemini-cli \
-    opencode-ai
+    @ast-grep/cli@latest \
+    @mariozechner/pi-coding-agent@latest \
+    @anthropic-ai/claude-code@latest \
+    @google/gemini-cli@latest \
+    opencode-ai@latest
 
 RUN bunx oh-my-opencode install --no-tui --claude=no --chatgpt=no --gemini=no
 
@@ -58,10 +59,15 @@ RUN usermod -aG sudo node && echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN cat >> /etc/bash.bashrc <<'EOF'
 alias ll="ls -alh"
 alias claude-yolo="claude --dangerously-skip-permissions"
+alias gemini-yolo="gemini --yolo"
 EOF
 
-USER node
+# Add entrypoint script for dynamic UID/GID mapping
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 WORKDIR /workspace
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 # run a login shell, so /etc/profile.d/*.sh will be loaded
 CMD ["/bin/bash", "--login"]
