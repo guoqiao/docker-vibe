@@ -59,6 +59,7 @@ RUN usermod -aG sudo node && echo "node ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN cat >> /etc/bash.bashrc <<'EOF'
 alias ll="ls -alh"
 alias claude-yolo="claude --dangerously-skip-permissions"
+alias gemini-yolo="gemini --yolo"
 EOF
 
 # Add entrypoint script for dynamic UID/GID mapping
