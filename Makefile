@@ -4,13 +4,14 @@ UID := $(shell id -u)
 GID := $(shell id -g)
 
 init:
+	git pull || true
 	touch .env
 	sudo chown -R ${UID}:${GID} .
 
 show:
 	docker image ls | grep ${name}
 
-build:
+build: init
 	docker build --platform linux/amd64 -t ${name} .
 	make show
 
