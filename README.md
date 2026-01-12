@@ -34,10 +34,10 @@ vim ~/.env.d/vibe.env
 vibe
 
 # or load a custom .env file
-vibe ~/.env.d/vibe.env
+vibe path/to/my/.env
 ```
 
-`.env` example:
+`.env` example for claude code:
 (not needed if you use oauth for claude code)
 ```
 ANTHROPIC_BASE_URL=http://192.168.20.55:8317
