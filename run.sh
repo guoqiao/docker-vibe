@@ -12,8 +12,14 @@ mkdir -p ~/.gemini && sudo chown -R "${owner}" ~/.gemini
 name=$(basename $(pwd))
 workdir=/home/node/${name}
 
-# use a global .env file, so it can be shared across all projects/containers
+# if provided, pass a .env file to contianer, e.g.: for auth token, etc.
+# a global .env file is preferred, so it can be shared across all projects/containers
 env_file=${1:-~/.env.d/vibe.env}
+if [ -f ${env_file} ]; then
+    env_file_opt="--env-file ${env_file}"
+else
+    env_file_opt=""
+fi
 
 # agent config dirs are mounted into container
 # so oauth can work directly, and sessions can persist
@@ -21,10 +27,11 @@ env_file=${1:-~/.env.d/vibe.env}
 # run container with host uid/gid to avoid perm issues
 # HOST_UID/HOST_GID are passed to the entrypoint script
 # which will modify the node user's UID/GID to match
-docker run -it --rm --platform linux/amd64 --pull never \
+docker run -it --rm ${env_file_opt} \
+    --platform linux/amd64 \
+    --pull never \
     -e HOST_UID=$(id -u) \
     -e HOST_GID=$(id -g) \
-    --env-file ${env_file} \
     -v ~/.claude:/home/node/.claude \
     -v ~/.gemini:/home/node/.gemini \
     -v $(pwd):${workdir} -w ${workdir} \
