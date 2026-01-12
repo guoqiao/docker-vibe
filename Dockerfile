@@ -1,4 +1,5 @@
 # https://hub.docker.com/_/node
+# use node lts on debian trixie as base image, so we have the nodejs eco system ready
 FROM node:lts-trixie
 
 RUN apt-get update && apt-get install -y \
@@ -34,8 +35,7 @@ RUN curl -fsSL https://ampcode.com/install.sh | bash
 
 # install uv
 # https://docs.astral.sh/uv/guides/integration/docker/#available-images
-# not working:
-# COPY --from=ghcr.io/astral-sh/uv:python3.14-trixie-slim /uv /uvx /bin/
+# this ensures we have a modern and fast python runtime ready
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
@@ -46,6 +46,7 @@ ENV GOPATH="/root/go"
 ENV PATH="${GOPATH}/bin:${PATH}"
 
 # install homebrew
+# this is 1.5G ish, only enable if you really need it
 #RUN useradd -m -s /bin/bash linuxbrew
 #COPY --from=homebrew/brew:latest /home/linuxbrew/.linuxbrew /home/linuxbrew/.linuxbrew
 #RUN chown -R linuxbrew:linuxbrew /home/linuxbrew/.linuxbrew
@@ -63,11 +64,10 @@ alias gemini-yolo="gemini --yolo"
 EOF
 
 # Add entrypoint script for dynamic UID/GID mapping
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY --chmod=0755 entrypoint.sh /entrypoint.sh
 
 WORKDIR /workspace
 
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 # run a login shell, so /etc/profile.d/*.sh will be loaded
 CMD ["/bin/bash", "--login"]

@@ -9,11 +9,12 @@ owner="$(id -u):$(id -g)"
 mkdir -p ~/.claude && sudo chown -R "${owner}" ~/.claude
 mkdir -p ~/.gemini && sudo chown -R "${owner}" ~/.gemini
 
-name=$(basename $(pwd))
 # claude code will create a folder ~/.claude/projects/-home-node-${name}
 # so it's necessary to use specific folder name
+name=$(basename $(pwd))
 workdir=/home/node/${name}
 
+# use a global .env file, so it can be shared across all projects/containers
 env_file=${1:-~/.env.d/vibe.env}
 
 # agent config dirs are mounted into container
