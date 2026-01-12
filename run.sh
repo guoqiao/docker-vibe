@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xue
+set -ueo pipefail
 
 # ensure agent config dirs are owned by host user correctly
 owner="$(id -u):$(id -g)"
@@ -27,6 +27,7 @@ fi
 # run container with host uid/gid to avoid perm issues
 # HOST_UID/HOST_GID are passed to the entrypoint script
 # which will modify the node user's UID/GID to match
+set -x
 docker run -it --rm ${env_file_opt} \
     --platform linux/amd64 \
     --pull never \
@@ -37,4 +38,4 @@ docker run -it --rm ${env_file_opt} \
     -v $(pwd):${workdir} -w ${workdir} \
     --name ${name} \
     vibe
-
+set +x
