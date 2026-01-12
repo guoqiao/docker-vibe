@@ -3,8 +3,8 @@
 set -xue
 
 # run container with same user id to avoid perm issues
-# assume the user id exists in both host and container
-# which is normally 1000 on debian/ubuntu
+# HOST_UID/HOST_GID are passed to the entrypoint script
+# which will modify the node user's UID/GID to match
 owner="$(id -u):$(id -g)"
 mkdir -p ~/.claude && sudo chown -R "${owner}" ~/.claude
 mkdir -p ~/.gemini && sudo chown -R "${owner}" ~/.gemini
@@ -19,8 +19,9 @@ env_file=${1:-~/.env.d/vibe.env}
 # agent config dirs are mounted into container
 # so oauth can work directly, and sessions can persist
 
-docker run -it --rm --platform amd64 \
-    -u ${owner} \
+docker run -it --rm --platform linux/amd64 \
+    -e HOST_UID=$(id -u) \
+    -e HOST_GID=$(id -g) \
     --env-file ${env_file} \
     -v ~/.claude:/home/node/.claude \
     -v ~/.gemini:/home/node/.gemini \

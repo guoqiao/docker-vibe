@@ -60,8 +60,12 @@ alias ll="ls -alh"
 alias claude-yolo="claude --dangerously-skip-permissions"
 EOF
 
-USER node
+# Add entrypoint script for dynamic UID/GID mapping
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 WORKDIR /workspace
 
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 # run a login shell, so /etc/profile.d/*.sh will be loaded
 CMD ["/bin/bash", "--login"]
