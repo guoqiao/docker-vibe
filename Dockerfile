@@ -3,7 +3,7 @@
 FROM node:lts-trixie
 
 RUN apt-get update && apt-get install -y \
-    build-essential \
+    build-essential cmake \
     ca-certificates \
     curl wget httpie \
     git tree less \
